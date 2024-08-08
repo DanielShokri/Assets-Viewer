@@ -1,0 +1,20 @@
+{
+  "name": "asset-viewer-cli",
+  "version": "1.0.0",
+  "description": "A simple CLI tool to view assets in a project",
+  "main": "index.js",
+  "bin": {
+    "asset-viewer": "./cli.js"
+  },
+  "scripts": {
+    "view-assets": "node cli.js view"
+  },
+  "keywords": ["assets", "viewer", "cli"],
+  "author": "Daniel Shokri",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.17.1",
+    "yargs": "^17.0.1"
+  }
+}
