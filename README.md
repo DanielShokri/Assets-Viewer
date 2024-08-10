@@ -1,6 +1,11 @@
 # Asset Viewer
+[![Asset Viewer](https://img.shields.io/badge/Asset_Viewer-8A2BE2?logo=github)](https://github.com/DanielShokri/Assets-Viewer "Go to GitHub repo") 
+
+[![stars - Trig-JS](https://img.shields.io/github/stars/DanielShokri/Assets-Viewer?style=social)](https://github.com/DanielShokri/Assets-Viewer)
 
 Effortlessly browse and manage your image assets with this simple, local web-based viewer.  Instantly preview images, copy filenames with a click, and enjoy a clean, organized display of your JPGs, PNGs, GIFs, and more.
+
+[![SDmfC.gif](https://s10.gifyu.com/images/SDmfC.gif)](https://gifyu.com/image/SDmfC)
 
 ## Features
 
@@ -12,9 +17,16 @@ Effortlessly browse and manage your image assets with this simple, local web-bas
 
 ## Installation
 
+NPM:
 ```bash
-npm install -g asset-viewer 
+npm i asset-viewer-cli
 ```
+
+YARN:
+```bash
+yarn add asset-viewer-cli
+```
+
 
 ## Usage
 After installation, you can use the asset-viewer command in any project directory:
