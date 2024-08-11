@@ -1,0 +1,58 @@
+<script>
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImage");
+  
+  // Modal Image Gallery
+  function openModal(imgSrc) {
+    modal.style.display = "flex";
+    modalImg.src = imgSrc;
+    setTimeout(() => {
+      modal.style.opacity = "1";
+    }, 10);
+  }
+
+  function closeModal() {
+    modal.style.opacity = "0";
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 300);
+  }
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      closeModal();
+    }
+  };
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  });
+  // Copy to Clipboard
+  function copyToClipboard(name) {
+    var copyText = document.querySelector(`[data-copyid="${name}"]`);
+    console.log("copyText", copyText.textContent);
+
+    navigator.clipboard.writeText(copyText.textContent);
+  }
+
+  const themeToggleCheckbox = document.getElementById("theme-toggle-checkbox");
+
+  // Toggle mode
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    themeToggleCheckbox.checked = true; // Sync checkbox state
+  }
+
+  themeToggleCheckbox.addEventListener("change", () => {
+    if (themeToggleCheckbox.checked) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("theme", "light");
+    }
+  });
+</script>
