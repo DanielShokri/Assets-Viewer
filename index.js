@@ -2,14 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const ejs = require('ejs');
-const { exec } = require('child_process');
 const net = require('net');
+const { exec } = require('child_process');
 
 const app = express();
 const basePort = 3111;
 
-// Set the correct path for the templates folder
-app.set('views', path.join(__dirname, 'templates'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
@@ -53,12 +51,32 @@ async function findAvailablePort(startPort) {
   return port;
 }
 
+function openBrowser(url) {
+  let command;
+  switch (process.platform) {
+    case 'darwin':
+      command = 'open';
+      break;
+    case 'win32':
+      command = 'start';
+      break;
+    default:
+      command = 'xdg-open';
+      break;
+  }
+  exec(`${command} ${url}`);
+}
+
 async function generateAssetViewer(assetDir) {
-  const assets = scanDirectory(assetDir).map((asset) => ({
-    name: path.basename(asset),
-    path: encodeURIComponent(path.relative(assetDir, asset)),
-    type: path.extname(asset).slice(1).toLowerCase(),
-  }));
+  const assets = scanDirectory(assetDir).map((asset) => {
+    const relativePath = path.relative(assetDir, asset);
+    return {
+      name: path.basename(asset),
+      path: encodeURIComponent(relativePath),
+      absolutePath: '/' + relativePath.split(path.sep).join('/'), // Convert to URL-friendly path
+      type: path.extname(asset).slice(1).toLowerCase(),
+    };
+  });
 
   app.get('/', (req, res) => {
     res.render('template', { assets });
@@ -73,9 +91,9 @@ async function generateAssetViewer(assetDir) {
   const port = await findAvailablePort(basePort);
 
   app.listen(port, '0.0.0.0', () => {
-    console.log(`Asset viewer is running at http://localhost:${port}`);
-    const openCommand = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open';
-    exec(`${openCommand} http://localhost:${port}`);
+    const url = `http://localhost:${port}`;
+    console.log(`Asset viewer is running at ${url}`);
+    openBrowser(url);
   });
 
   process.on('SIGINT', () => {
@@ -98,6 +116,9 @@ function main() {
   generateAssetViewer(assetDir);
 }
 
-main();
+// Only run the main function if this script is run directly
+if (require.main === module) {
+  main();
+}
 
 module.exports = { generateAssetViewer };

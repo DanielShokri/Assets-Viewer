@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="sl-theme-dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asset Viewer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.16.0/cdn/themes/dark.css"
+    />
+    <link rel="icon" type="image/png" href="/favicon/favicon32.png">
+    <%-include('./css/styles.ejs') %>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <span class="header-brand">
+          <span class="header-brand-name">Asset Viewer</span>
+        </span>
+        <nav class="header-nav">
+          <sl-input
+            type="search"
+            id="searchInput"
+            placeholder="Search for assets..."
+            clearable
+          >
+            <sl-icon name="search" slot="prefix"></sl-icon>
+          </sl-input>
+        </nav>
+        <div class="header-actions">
+          <sl-switch id="theme-toggle" size="small">
+            <sl-icon name="sun" slot="checked"></sl-icon>
+            <sl-icon name="moon" slot="unchecked"></sl-icon>
+          </sl-switch>
+          <sl-button href="https://github.com/DanielShokri/Assets-Viewer" target="_blank" variant="primary" size="small">
+            <sl-icon slot="prefix" name="github"></sl-icon>
+            GitHub
+          </sl-button>
+        </div>
+      </div>
+    </header>
+    <div class="asset-grid">
+      <% assets.forEach(function(asset) { %>
+        <sl-card class="asset-item" data-name="<%= asset.name.toLowerCase() %>">
+          <% if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(asset.type)) { %>
+            <img
+              slot="image"
+              src="assets/<%= asset.path %>"
+              alt="<%= asset.name %>"
+              onclick="openModal(this.src)"
+            />
+          <% } else { %>
+            <div slot="image" class="non-image"><%= asset.type %></div>
+          <% } %>
+          <strong><%= asset.name %></strong>
+          <div slot="footer" class="actions-section">
+            <sl-button class="custom-copy-button" size="small" data-value="<%= asset.name %>">
+              <sl-icon name="clipboard"></sl-icon>
+              Copy Name
+              <sl-tooltip content="Copied!" trigger="click" placement="top"></sl-tooltip>
+            </sl-button>
+            <sl-button class="custom-copy-button" size="small" data-value="<%= asset.absolutePath %>">
+              <sl-icon name="clipboard"></sl-icon>
+              Copy Path
+              <sl-tooltip content="Copied!" trigger="click" placement="top"></sl-tooltip>
+            </sl-button>
+          </div>
+        </sl-card>
+      <% }); %>
+    </div>
+
+    <div id="imageModal" class="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img class="modal-content" id="modalImage" />
+    </div>
+
+    <%-include('./script.ejs') %>
+  </body>
+</html>
