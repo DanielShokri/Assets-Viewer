@@ -92,12 +92,6 @@
     color: var(--sl-color-neutral-500);
   }
 
-  .actions-section {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: auto;
-  }
-
   @media (max-width: 768px) {
     .asset-grid {
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -211,8 +205,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 10px;
     gap: 12px;
+    margin: 0 auto;
   }
 
   /* actions */
@@ -324,20 +318,12 @@
     --sl-color-primary-700: #3a7ac8;
     background-color: transparent;
     color: var(--sl-color-primary-600);
-    border: 1px solid var(--sl-color-primary-600);
-    border-radius: 4px;
-    padding: 6px 12px;
     font-size: var(--sl-font-size-small);
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-  }
-
-  .custom-copy-button:hover {
-    background-color: var(--sl-color-primary-600);
-    color: white;
   }
 
   .custom-copy-button sl-icon {
