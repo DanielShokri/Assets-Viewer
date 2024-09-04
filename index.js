@@ -9,6 +9,7 @@ const app = express();
 const basePort = 3111;
 
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
 
 const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
